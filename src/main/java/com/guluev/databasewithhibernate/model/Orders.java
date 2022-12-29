@@ -14,7 +14,8 @@ public class Orders {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    private int customer_id;
+    @ManyToOne(optional = false)
+    private Customers customer;
 
     private String productName;
 
