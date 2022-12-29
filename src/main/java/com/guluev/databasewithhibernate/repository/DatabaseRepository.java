@@ -33,7 +33,6 @@ public class DatabaseRepository {
     }
 
     public String getProductName(String name) {
-        //var result = entityManager.createQuery(select, Orders.class);
         var result = entityManager.createQuery(select, Orders.class);
         result.setParameter("name", name);
         return result.getResultList().get(0).getProductName();
