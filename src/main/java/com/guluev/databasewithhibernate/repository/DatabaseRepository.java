@@ -1,5 +1,8 @@
 package com.guluev.databasewithhibernate.repository;
 
+import com.guluev.databasewithhibernate.model.Orders;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
 
@@ -13,9 +16,11 @@ import java.util.stream.Collectors;
 public class DatabaseRepository {
     private String select;
 
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public DatabaseRepository() {
-        select = read("select.sql");
+        select = read("sqlcomands/select.sql");
     }
 
     private static String read(String scriptFileName) {
@@ -28,5 +33,9 @@ public class DatabaseRepository {
     }
 
     public String getProductName(String name) {
-
+        //var result = entityManager.createQuery(select, Orders.class);
+        var result = entityManager.createQuery(select, Orders.class);
+        result.setParameter("name", name);
+        return result.getResultList().get(0).getProductName();
     }
+}
